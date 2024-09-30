@@ -30,9 +30,9 @@ public class ProductDetailsRepositoryImpl implements ProductDetailsRepository {
 			// db url
 			// username
 			// password
-			String url = "jdbc:mysql://Kranti22:3306/java_sessions_us_batch_db";
-			String userName = "swati";
-			String password = "Swati@99";
+			String url = "jdbc:mysql://localhost:3306/java_sessions_us_batch_db";
+			String userName = "root";
+			String password = "root";
 			Connection connection = DriverManager.getConnection(url, userName, password);
 			return connection;
 

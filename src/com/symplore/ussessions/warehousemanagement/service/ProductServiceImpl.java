@@ -8,8 +8,6 @@ import com.symplore.ussessions.warehousemanagement.repository.ProductDetailsRepo
 
 public class ProductServiceImpl implements ProductDetailsService {
 
-
-
 	@Override
 	public String addProduct(ProductDetails productDetails) {
 		ProductDetailsRepository productRepository = new ProductDetailsRepositoryImpl();
