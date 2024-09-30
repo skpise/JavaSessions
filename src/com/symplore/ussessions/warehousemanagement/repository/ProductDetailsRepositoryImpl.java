@@ -1,10 +1,14 @@
 package com.symplore.ussessions.warehousemanagement.repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.symplore.ussessions.warehousemanagement.entity.ProductDetails;
@@ -17,7 +21,8 @@ public class ProductDetailsRepositoryImpl implements ProductDetailsRepository {
 
 	// blocks {}
 	// inside methods;
-
+	private List<ProductDetails> prlist=new ArrayList<ProductDetails>();
+	
 	private Connection connectToDB() {
 
 		try {
@@ -25,9 +30,9 @@ public class ProductDetailsRepositoryImpl implements ProductDetailsRepository {
 			// db url
 			// username
 			// password
-			String url = "jdbc:mysql://localhost:3306/java_sessions_us_batch_db";
-			String userName = "root";
-			String password = "root";
+			String url = "jdbc:mysql://Kranti22:3306/java_sessions_us_batch_db";
+			String userName = "swati";
+			String password = "Swati@99";
 			Connection connection = DriverManager.getConnection(url, userName, password);
 			return connection;
 
@@ -77,18 +82,83 @@ public class ProductDetailsRepositoryImpl implements ProductDetailsRepository {
 	@Override
 	public List<ProductDetails> viewProducts() {
 		// TODO Auto-generated method stub
-		return null;
+				// get connection
+				// write a select query
+				// get the response
+				//select * from  product_details
+		try {
+			Connection con = connectToDB();
+			String query = "select * from  product_details";
+			PreparedStatement st = con.prepareStatement(query);
+			
+			ResultSet rs = st.executeQuery();
+			System.out.println("query :" + query);
+			 while ( rs.next() ) 
+			 {
+				 ProductDetails product=new ProductDetails();
+				 
+				 product.setProdId(rs.getInt("p_id"));
+				 product.setProdName(rs.getNString("p_name"));
+				 product.setExpDate((rs.getDate("exp_date")).toLocalDate());
+				 product.setManDate((rs.getDate("man_date")).toLocalDate());
+				 product.setCategory(rs.getNString("category"));
+				 prlist.add(product);
+	      
+	            }
+			 
+		} catch (SQLException e) {
+			System.out.println("exception occured while Reading the products");
+			e.printStackTrace();
+		}
+		
+		return prlist;
 	}
 
 	@Override
-	public void deleteProduct(Integer productId) {
+	public int deleteProduct(Integer productId) {
 		// TODO Auto-generated method stub
+		int noOfRowsEffected =0;
+		try {
+			Connection con = connectToDB();
+			String query = "delete from product_details  where p_id=" + productId;
+			PreparedStatement st = con.prepareStatement(query);
 
+			// update table_name 
+			System.out.println("query :" + query);
+			noOfRowsEffected = st.executeUpdate();
+		
+		} 
+		catch (SQLException e) {
+			System.out.println("exception occured while Deleting the product");
+			e.printStackTrace();
+		}
+		return noOfRowsEffected;
 	}
 
 	@Override
-	public void updateProduct(Integer productId, Integer quantity) {
+	public int updateProduct(Integer productId, String productName) {
 		// TODO Auto-generated method stub
+				// get connection
+				// write a update query
+				// get the response
+		//update product_details set p_name='watch' where p_id=6;
+		int noOfRowsEffected=0;
+				try {
+					Connection con = connectToDB();
+					String query = "update product_details set p_name='"+productName + "' where p_id="+productId;
+					PreparedStatement st = con.prepareStatement(query);
+
+					// update table_name 
+					
+						System.out.println("query :" + query);
+						 noOfRowsEffected = st.executeUpdate();
+			
+
+				} catch (SQLException e) {
+					System.out.println("exception occured while adding the product");
+					e.printStackTrace();
+				}
+				return  noOfRowsEffected;
 
 	}
 

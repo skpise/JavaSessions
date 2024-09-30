@@ -10,8 +10,8 @@ public interface ProductDetailsRepository {
 
 	public List<ProductDetails> viewProducts();
 
-	public void deleteProduct(Integer productId);
+	public int deleteProduct(Integer productId);
 
-	public void updateProduct(Integer productId, Integer quantity);
+	public int updateProduct(Integer productId, String productName);
 
 }

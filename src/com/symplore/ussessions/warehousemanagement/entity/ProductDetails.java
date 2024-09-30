@@ -1,5 +1,6 @@
 package com.symplore.ussessions.warehousemanagement.entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class ProductDetails {
@@ -29,16 +30,16 @@ public class ProductDetails {
 		return manDate;
 	}
 
-	public void setManDate(LocalDate manDate) {
-		this.manDate = manDate;
+	public void setManDate(LocalDate date) {
+		this.manDate = date;
 	}
 
 	public LocalDate getExpDate() {
 		return expDate;
 	}
 
-	public void setExpDate(LocalDate expDate) {
-		this.expDate = expDate;
+	public void setExpDate(LocalDate date) {
+		this.expDate = date;
 	}
 
 	public String getCategory() {

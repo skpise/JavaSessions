@@ -2,6 +2,7 @@ package com.symplore.ussessions.warehousemanagement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 import com.symplore.ussessions.warehousemanagement.controller.ProductServiceController;
@@ -12,8 +13,11 @@ public class UI {
 	
 
 	public static void main(String[] args) {
-		addProduct();
-
+		//addProduct();
+		//updateProcuct();
+		//showProduct();
+		deleteProduct();
+		
 	}
 
 	private static void addProduct() {
@@ -36,10 +40,68 @@ public class UI {
 		product.setExpDate(edt);
 		product.setManDate(mdt);
 		product.setProdName(pname);
-		
 		ProductServiceController controller= new ProductServiceController();
 		controller.addProduct(product);
 
 	}
+	
+	private static void showProduct()
+	{
+		try
+		{
+		
+			ProductServiceController controller= new ProductServiceController();
+			List<ProductDetails> lst =controller.viewProduct();
+		
+			 for (ProductDetails product : lst) {
+				 System.out.println("product Id="+ product.getProdId());
+				 System.out.println("product Name="+ product.getProdName());
+				 System.out.println("product Name="+ product.getCategory());
+				 System.out.println("product MFG Date="+ product.getManDate());
+				 System.out.println("product EXP Date="+ product.getExpDate());
+				 System.out.println();
+			 }
+		 
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+
+	}
+	
+	private static void updateProcuct()
+	{
+		try
+		{
+			ProductServiceController controller= new ProductServiceController();
+			System.out.println("enter product Id");
+			int pId = sc.nextInt();
+			System.out.println("enter product Name");
+			String pName = sc.next();
+			controller.updateProcuct(pId, pName);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	
+	private static void deleteProduct()
+	{
+			try
+			{
+				ProductServiceController controller= new ProductServiceController();
+				System.out.println("enter product Id");
+				int pId = sc.nextInt();
+				controller.deleteProcuct(pId);
+			}
+			catch (Exception e) 
+			{
+				System.out.println(e.getMessage());
+			}
+			
+	}
+	
 
 }
